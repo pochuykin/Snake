@@ -26,7 +26,7 @@ namespace Snake
         }
         public void HandleKey(ConsoleKeyInfo key)
         {
-            if (key.Key == ConsoleKey.RightArrow && direction != Direction.Left && direction != Direction.Right) { SetDirection(Direction.Right); }
+                 if (key.Key == ConsoleKey.RightArrow && direction != Direction.Left && direction != Direction.Right) { SetDirection(Direction.Right); }
             else if (key.Key == ConsoleKey.LeftArrow && direction != Direction.Left && direction != Direction.Right) { SetDirection(Direction.Left); }
             else if (key.Key == ConsoleKey.UpArrow && direction != Direction.Down && direction != Direction.Up) { SetDirection(Direction.Up); }
             else if (key.Key == ConsoleKey.DownArrow && direction != Direction.Down && direction != Direction.Up) { SetDirection(Direction.Down); };
@@ -34,11 +34,32 @@ namespace Snake
         public void Move()
         {
             Point tail = new Point(pList.First(),' ');
-            tail.Draw();
             Point head = GetNextPoint();
             pList.Add(head);
             pList.RemoveAt(0);
-            head.Draw();
+            if (tail.x < head.x)
+            {
+                tail.Draw();
+                head.Draw();
+            }
+            else
+            {
+                head.Draw();
+                tail.Draw();
+            }
+        }
+        public bool Hit(Figure f)
+        {
+            bool result = false;
+            List<Point> pList = f.getList().ToList();
+            if (f is Snake) pList.RemoveAt(pList.Count()-1);
+                    
+            foreach (Point p in pList) result |= Hit(p);
+            return result;
+        }
+        public bool Hit(Point p)
+        {
+            return p.Hit(pList.Last());
         }
     }
 }

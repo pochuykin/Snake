@@ -10,21 +10,18 @@ namespace Snake
     {
         static void Main(string[] args)
         {
-            new PlayGround().Draw();
+            PlayGround playground = new PlayGround();
+            playground.Draw();
             Snake snake = new Snake(new Line(new Point(5,5,'*'), 5 ,Direction.Right), Direction.Right);
             while(true)
             {
                 if (Console.KeyAvailable)
                 {
                     snake.HandleKey(Console.ReadKey());
-                    Thread.Sleep(100);
-                    snake.Move();
                 }
-                else
-                {
-                    Thread.Sleep(100);
-                    snake.Move();
-                }
+                Thread.Sleep(200);
+                snake.Move();
+                if (snake.Hit(playground) || snake.Hit(snake)) { break; }
             }
             Console.ReadLine();
         }

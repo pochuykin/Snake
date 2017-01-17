@@ -7,10 +7,9 @@ namespace Snake
 {
     class Point
     {
-        int x;
+        public int x;
         int y;
         char s;
-        public Point() { }
         public Point(Point p)
         {
             this.x = p.x;
@@ -40,6 +39,10 @@ namespace Snake
         {
             Console.SetCursorPosition(x, y);
             Console.Write(s);
+        }
+        public bool Hit(Point p)
+        {
+            return x == p.x && y == p.y;
         }
     }
 }
