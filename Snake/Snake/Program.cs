@@ -10,10 +10,11 @@ namespace Snake
     {
         static void Main(string[] args)
         {
-            PlayGround playground = new PlayGround();
-            playground.Draw();
+            PlayGround playground = new PlayGround('#');
             Snake snake = new Snake(new Line(new Point(5,5,'*'), 5 ,Direction.Right), Direction.Right);
-            while(true)
+            Food food = new Food(snake,'@');
+            snake.SetFood(food);
+            while (true)
             {
                 if (Console.KeyAvailable)
                 {
@@ -21,7 +22,8 @@ namespace Snake
                 }
                 Thread.Sleep(200);
                 snake.Move();
-                if (snake.Hit(playground) || snake.Hit(snake)) { break; }
+                if (snake.Hit(playground) || snake.Hit(snake)) break;
+                else if (snake.Hit(food)) food.Eat();
             }
             Console.ReadLine();
         }

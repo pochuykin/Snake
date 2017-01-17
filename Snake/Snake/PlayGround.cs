@@ -9,14 +9,18 @@ namespace Snake
     {
         public static int width = 60;
         public static int height = 25;
-        public static char sym = '%';
+        char sym = '%';
+        public PlayGround(char s)
+        {
+            sym = s;
+            Draw();
+        }
         public override void Draw()
         {
             Console.SetWindowPosition(0, 0);
             Console.SetWindowSize(width + 1, height + 1);
             Console.SetBufferSize(width + 1, height + 1);
             Console.ForegroundColor = ConsoleColor.Green;
-            pList = new List<Point>();
             Line leftLine = new Line(new Point(0, 0, sym), height, Direction.Down);
             pList.AddRange(leftLine.getList());
             Line downLine = new Line(new Point(0, height, sym), width, Direction.Right);

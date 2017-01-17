@@ -8,11 +8,15 @@ namespace Snake
     class Snake: Figure
     {
         Direction direction;
+        Food food;
         public Snake(Line l, Direction d)
         {
-            pList = new List<Point>();
             pList.AddRange(l.getList());
             direction = d;
+        }
+        public void SetFood(Food food)
+        {
+            this.food = food;
         }
         void SetDirection(Direction d)
         {
@@ -33,19 +37,28 @@ namespace Snake
         }
         public void Move()
         {
-            Point tail = new Point(pList.First(),' ');
+            Point tail = new Point(pList.First());
             Point head = GetNextPoint();
             pList.Add(head);
-            pList.RemoveAt(0);
-            if (tail.x < head.x)
+            if (head.getX() > tail.getX())
             {
-                tail.Draw();
+                if (!Hit(food))
+                {
+                    pList.RemoveAt(0);
+                    tail.Delete();
+                }
+                else Eat();
                 head.Draw();
             }
             else
             {
                 head.Draw();
-                tail.Draw();
+                if (!Hit(food))
+                {
+                    pList.RemoveAt(0);
+                    tail.Delete();
+                }
+                else Eat();
             }
         }
         public bool Hit(Figure f)
@@ -53,13 +66,18 @@ namespace Snake
             bool result = false;
             List<Point> pList = f.getList().ToList();
             if (f is Snake) pList.RemoveAt(pList.Count()-1);
-                    
             foreach (Point p in pList) result |= Hit(p);
             return result;
         }
         public bool Hit(Point p)
         {
             return p.Hit(pList.Last());
+        }
+        public void Eat()
+        {
+            food.Eat();
+            Console.SetCursorPosition(0, PlayGround.height);
+            Console.Write((pList.Count()-5) * 50);
         }
     }
 }

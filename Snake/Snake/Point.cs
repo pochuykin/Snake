@@ -7,7 +7,7 @@ namespace Snake
 {
     class Point
     {
-        public int x;
+        int x;
         int y;
         char s;
         public Point(Point p)
@@ -22,12 +22,7 @@ namespace Snake
             this.y = y;
             this.s = s;
         }
-        public Point(Point p, char s)
-        {
-            this.x = p.x;
-            this.y = p.y;
-            this.s = s;
-        }
+        public int getX() { return x; }
         public void Move(int dx,Direction d)
         {
                  if (d == Direction.Left)  { this.x -= dx; }
@@ -40,9 +35,21 @@ namespace Snake
             Console.SetCursorPosition(x, y);
             Console.Write(s);
         }
+        public void Delete()
+        {
+            Console.SetCursorPosition(x, y);
+            Console.Write(' ');
+        }
         public bool Hit(Point p)
         {
             return x == p.x && y == p.y;
+        }
+        public bool Hit(Figure f)
+        {
+            bool result = false;
+            List<Point> pList = f.getList().ToList();
+            foreach (Point p in pList) result |= Hit(p);
+            return result;
         }
     }
 }
