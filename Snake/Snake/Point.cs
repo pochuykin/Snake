@@ -23,6 +23,7 @@ namespace Snake
             this.s = s;
         }
         public int getX() { return x; }
+        public int getY() { return y; }
         public void Move(int dx,Direction d)
         {
                  if (d == Direction.Left)  { this.x -= dx; }
@@ -32,8 +33,10 @@ namespace Snake
         }
         public void Draw()
         {
+            //Console.ForegroundColor = ConsoleColor.Gray;
             Console.SetCursorPosition(x, y);
             Console.Write(s);
+            //Console.ForegroundColor = ConsoleColor.Black;
         }
         public void Delete()
         {

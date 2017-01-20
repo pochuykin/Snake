@@ -13,9 +13,9 @@ namespace Snake
         {
             this.sym = sym;
             this.snake = snake;
-            Generate();
+            snake.SetFood(this);
         }
-        public void Generate()
+        public override void Draw()
         {
             if (pList.Count() == 0)
             {
@@ -23,16 +23,16 @@ namespace Snake
                 Point p = new Point(PlayGround.width/2, PlayGround.height/2, sym);
                 while (p.Hit(snake)) 
                 {
-                    p = new Point(r.Next() % (PlayGround.width - 2) + 1, r.Next() % (PlayGround.height - 2) + 1, sym);
+                    p = new Point(r.Next(1,PlayGround.width - 1), r.Next(1,PlayGround.height - 1) + 1, sym);
                 }
                 pList.Add(p);
-                Draw();
+                base.Draw();
             }
         }
         public void Eat()
         {
             pList.Clear();
-            Generate();
+            Draw();
         }
     }
 }

@@ -10,22 +10,40 @@ namespace Snake
     {
         static void Main(string[] args)
         {
-            PlayGround playground = new PlayGround('#');
-            Snake snake = new Snake(new Line(new Point(5,5,'*'), 5 ,Direction.Right), Direction.Right);
-            Food food = new Food(snake,'@');
-            snake.SetFood(food);
+            PlayGround playground;
+            Snake snake;
+            Food food;
             while (true)
             {
-                if (Console.KeyAvailable)
+                playground = new PlayGround('+');
+                snake = new Snake(new Line(new Point(5, 5, '*'), 5, Direction.Right), Direction.Right);
+                food = new Food(snake, '$');
+                playground.Draw();
+                food.Draw();
+                snake.Draw();
+                while (true)
                 {
-                    snake.HandleKey(Console.ReadKey());
+                    snake.PrintPoints();
+                    if (Console.KeyAvailable)
+                    {
+                        ConsoleKeyInfo key = Console.ReadKey(true);
+                        if (key.Key == ConsoleKey.Spacebar)
+                        {
+                            key = Console.ReadKey(true);
+                        }
+                        else snake.HandleKey(key);
+                    }
+                    Thread.Sleep(200 - snake.getList().Count() * (150 / (PlayGround.width * PlayGround.height)));
+                    snake.Move();
+                    if (snake.Hit(playground) || snake.Hit(snake))
+                    {
+                        playground.GameOver();
+                        break;
+                    }
+                    else if (snake.Hit(food)) food.Eat();
                 }
-                Thread.Sleep(200);
-                snake.Move();
-                if (snake.Hit(playground) || snake.Hit(snake)) break;
-                else if (snake.Hit(food)) food.Eat();
+                Console.ReadLine();
             }
-            Console.ReadLine();
         }
     }
 }

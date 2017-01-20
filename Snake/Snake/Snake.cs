@@ -30,10 +30,10 @@ namespace Snake
         }
         public void HandleKey(ConsoleKeyInfo key)
         {
-                 if (key.Key == ConsoleKey.RightArrow && direction != Direction.Left && direction != Direction.Right) { SetDirection(Direction.Right); }
+            if (key.Key == ConsoleKey.RightArrow && direction != Direction.Left && direction != Direction.Right) { SetDirection(Direction.Right); }
             else if (key.Key == ConsoleKey.LeftArrow && direction != Direction.Left && direction != Direction.Right) { SetDirection(Direction.Left); }
             else if (key.Key == ConsoleKey.UpArrow && direction != Direction.Down && direction != Direction.Up) { SetDirection(Direction.Up); }
-            else if (key.Key == ConsoleKey.DownArrow && direction != Direction.Down && direction != Direction.Up) { SetDirection(Direction.Down); };
+            else if (key.Key == ConsoleKey.DownArrow && direction != Direction.Down && direction != Direction.Up) { SetDirection(Direction.Down); }
         }
         public void Move()
         {
@@ -55,8 +55,8 @@ namespace Snake
                 head.Draw();
                 if (!Hit(food))
                 {
-                    pList.RemoveAt(0);
                     tail.Delete();
+                    pList.RemoveAt(0);
                 }
                 else Eat();
             }
@@ -64,9 +64,17 @@ namespace Snake
         public bool Hit(Figure f)
         {
             bool result = false;
-            List<Point> pList = f.getList().ToList();
-            if (f is Snake) pList.RemoveAt(pList.Count()-1);
-            foreach (Point p in pList) result |= Hit(p);
+            List<Point> list = f.getList().ToList();
+            if (f is Snake) list.RemoveAt(list.Count()-1);
+            foreach (Point p in list) result |= Hit(p);
+            if (result && !(f is Food))
+            {
+                ConsoleColor c = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.Red;
+                Point p = new Point(pList.Last().getX(), pList.Last().getY(), '@');
+                p.Draw();
+                Console.ForegroundColor = c;
+            }
             return result;
         }
         public bool Hit(Point p)
@@ -76,8 +84,12 @@ namespace Snake
         public void Eat()
         {
             food.Eat();
+            PrintPoints();
+        }
+        public void PrintPoints()
+        {
             Console.SetCursorPosition(0, PlayGround.height);
-            Console.Write((pList.Count()-5) * 50);
+            Console.Write((pList.Count() - 5) * 10);
         }
     }
 }
