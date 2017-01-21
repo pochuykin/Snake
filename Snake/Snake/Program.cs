@@ -57,7 +57,7 @@ namespace Snake
                     key = Console.ReadKey(true);
                     pause = false;
                 }
-                else Program.snake.HandleKey(key);
+                Program.snake.HandleKey(key);
             }
         }
     }
