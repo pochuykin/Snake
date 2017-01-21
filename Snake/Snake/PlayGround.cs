@@ -7,13 +7,9 @@ namespace Snake
 {
     class PlayGround: Figure
     {
-        public static int width = 42;
-        public static int height = 22;
-        private char sym;
-        public PlayGround(char s)
-        {
-            sym = s;
-        }
+        public int width = 42;
+        public int height = 22;
+        private char sym = '+';
         public override void Draw()
         {
             Console.SetWindowPosition(0, 0);

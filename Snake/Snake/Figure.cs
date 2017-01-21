@@ -8,7 +8,7 @@ namespace Snake
     class Figure
     {
         protected List<Point> pList;
-        public Figure()
+        protected Figure()
         {
             pList = new List<Point>();
         }
@@ -19,7 +19,7 @@ namespace Snake
                 p.Draw();
             }
         }
-        public virtual void Delete()
+        public void Delete()
         {
             foreach (Point p in pList)
             {

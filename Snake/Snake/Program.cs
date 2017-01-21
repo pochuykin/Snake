@@ -8,16 +8,16 @@ namespace Snake
 {
     class Program
     {
+        public static PlayGround playground;
+        public static Snake snake;
+        public static Food food;
         static void Main(string[] args)
         {
-            PlayGround playground;
-            Snake snake;
-            Food food;
             while (true)
             {
-                playground = new PlayGround('+');
+                playground = new PlayGround();
                 snake = new Snake(new Line(new Point(5, 5, '*'), 5, Direction.Right), Direction.Right);
-                food = new Food(snake, '$');
+                food = new Food();
                 playground.Draw();
                 food.Draw();
                 snake.Draw();
@@ -33,7 +33,7 @@ namespace Snake
                         }
                         else snake.HandleKey(key);
                     }
-                    Thread.Sleep(200 - snake.getList().Count() * (150 / (PlayGround.width * PlayGround.height)));
+                    Thread.Sleep(200 - snake.getList().Count() * (150 / (playground.width * playground.height)));
                     snake.Move();
                     if (snake.Hit(playground) || snake.Hit(snake))
                     {

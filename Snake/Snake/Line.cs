@@ -12,9 +12,9 @@ namespace Snake
             pList = new List<Point>();
             for(int i = 0; i < size; ++i)
             {
-                Point tmp_p = new Point(p);
-                tmp_p.Move(i, d);
-                pList.Add(tmp_p);
+                Point tmpP = new Point(p);
+                tmpP.Move(i, d);
+                pList.Add(tmpP);
             }
         }
     }
