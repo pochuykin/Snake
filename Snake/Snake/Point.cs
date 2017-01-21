@@ -33,10 +33,8 @@ namespace Snake
         }
         public void Draw()
         {
-            //Console.ForegroundColor = ConsoleColor.Gray;
             Console.SetCursorPosition(x, y);
             Console.Write(s);
-            //Console.ForegroundColor = ConsoleColor.Black;
         }
         public void Delete()
         {

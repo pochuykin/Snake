@@ -10,6 +10,7 @@ namespace Snake
         public int width = 42;
         public int height = 22;
         private char sym = '+';
+        public String score = "Score: ";
         public override void Draw()
         {
             Console.SetWindowPosition(0, 0);
@@ -19,6 +20,8 @@ namespace Snake
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.CursorVisible = false;
             Console.Title = "Snake";
+            Console.SetCursorPosition(0, height);
+            Console.Write(score);
             Line leftLine = new Line(new Point(0, 0, sym), height-1, Direction.Down);
             pList.AddRange(leftLine.getList());
             Line downLine = new Line(new Point(0, height-1, sym), width, Direction.Right);
@@ -53,6 +56,8 @@ namespace Snake
 
             Console.SetCursorPosition(width / 3, height / 3 + 4);
             for (int i = 0; i < width / 3; ++i) Console.Write("#");
+
+            Program.gameOver = true;
         }
     }
 }

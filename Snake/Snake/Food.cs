@@ -14,9 +14,9 @@ namespace Snake
             {
                 Random r = new Random();
                 Point p = new Point(Program.playground.width/2, Program.playground.height /2, sym);
-                while (p.Hit(Program.snake)) 
+                while (Program.snake != null && p.Hit(Program.snake)) 
                 {
-                    p = new Point(r.Next(1, Program.playground.width - 1), r.Next(1, Program.playground.height - 1) + 1, sym);
+                    p = new Point(r.Next(1, Program.playground.width - 1), r.Next(1, Program.playground.height - 1), sym);
                 }
                 pList.Add(p);
                 base.Draw();

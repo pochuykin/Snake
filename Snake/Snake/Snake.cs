@@ -8,15 +8,18 @@ namespace Snake
     class Snake: Figure
     {
         private Direction direction;
+        private const int speedBegin = 200;
+        public int speed = speedBegin;
         public Snake(Line l, Direction d)
         {
             pList.AddRange(l.getList());
             direction = d;
+            PrintPoints();
         }
         private void SetDirection(Direction d)
         {
             direction = d;
-            Move();
+            Step(null);
         }
         private Point GetNextPoint()
         {
@@ -59,6 +62,16 @@ namespace Snake
                 }
                 else Eat();
             }
+            Program.timeLastMove = System.DateTime.Now;
+        }
+        public void Step(object o)
+        {
+            Program.snake.Move();
+            if (Program.snake.Hit(Program.playground) || Program.snake.Hit(Program.snake))
+            {
+                Program.playground.GameOver();
+            }
+            else if (Program.snake.Hit(Program.food)) Program.food.Eat();
         }
         private void Clash()
         {
@@ -85,11 +98,12 @@ namespace Snake
         public void Eat()
         {
             Program.food.Eat();
+            speed -= speedBegin * (3 / 4) / (Program.playground.height * Program.playground.width);
             PrintPoints();
         }
         public void PrintPoints()
         {
-            Console.SetCursorPosition(0, Program.playground.height);
+            Console.SetCursorPosition(Program.playground.score.Length, Program.playground.height);
             Console.Write((pList.Count() - 5) * 10);
         }
     }
