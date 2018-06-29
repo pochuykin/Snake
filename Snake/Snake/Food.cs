@@ -6,6 +6,7 @@ namespace Snake
     class Food: Figure
     {
         private char sym = '$';
+        private System.ConsoleColor Color = System.ConsoleColor.Blue;
         public override void Draw()
         {
             if (!PList.Any())
@@ -17,7 +18,7 @@ namespace Snake
                     p = new Point(r.Next(1, Program.playground.width - 1), r.Next(1, Program.playground.height - 1), sym);
                 }
                 PList.Add(p);
-                base.Draw();
+                base.Draw(Color);
             }
         }
         public void Eat()

@@ -104,11 +104,8 @@ namespace Snake
         private void Clash()
         {
             char sym = '@';
-            ConsoleColor c = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Red;
             Point p = new Point(PList.Last(), sym);
-            p.Draw();
-            Console.ForegroundColor = c;
+            p.Draw(ConsoleColor.Red);
         }
         protected override bool Hit(Figure f)
         {

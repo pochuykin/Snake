@@ -6,7 +6,8 @@ namespace Snake
     class Tunnel : Figure
     {
         private int nextTunel;
-        private const int speed = 5; 
+        private const int speed = 5;
+        private const System.ConsoleColor c = System.ConsoleColor.Red;
         public char sym = '0';
         public void Create()
         {
@@ -34,17 +35,10 @@ namespace Snake
                                 PList.Add(partTunnel2);
                                 break;
                         }
-                        Draw();
+                        Draw(c);
                     }
                 }
             }
-        }
-        public override void Draw()
-        {
-            ConsoleColor c = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Red;
-            base.Draw();
-            Console.ForegroundColor = c;
         }
         public override void Delete()
         {

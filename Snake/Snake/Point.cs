@@ -11,21 +11,21 @@ namespace Snake
 
         public Point(Point p)
         {
-            this.X = p.X;
-            this.Y = p.Y;
-            this.Sym = p.Sym;
+            X = p.X;
+            Y = p.Y;
+            Sym = p.Sym;
         }
         public Point(Point p, char s)
         {
-            this.X = p.X;
-            this.Y = p.Y;
-            this.Sym = s;
+            X = p.X;
+            Y = p.Y;
+            Sym = s;
         }
         public Point(int x, int y, char s)
         {
-            this.X = x;
-            this.Y = y;
-            this.Sym = s;
+            X = x;
+            Y = y;
+            Sym = s;
         }
 
         public int GetY() { return Y; }
@@ -45,6 +45,14 @@ namespace Snake
         {
             Console.SetCursorPosition(X, Y);
             Console.Write(s);
+        }
+        public void Draw(System.ConsoleColor color)
+        {
+            ConsoleColor tmpColor = Console.ForegroundColor;
+            Console.ForegroundColor = color;
+            Console.SetCursorPosition(X, Y);
+            Console.Write(Sym);
+            Console.ForegroundColor = tmpColor;
         }
         public void Delete()
         {
