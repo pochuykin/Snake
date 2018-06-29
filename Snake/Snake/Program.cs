@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 
 namespace Snake
@@ -11,6 +8,7 @@ namespace Snake
         public static PlayGround playground;
         public static Snake snake;
         public static Food food;
+        public static Tunnel tunnel;
         public static bool gameOver = false;
         public static bool pause = false;
         public static DateTime timeLastMove = new DateTime();
@@ -23,8 +21,9 @@ namespace Snake
                 playground.Draw();
                 food = new Food();
                 food.Draw();
-                snake = new Snake(new Line(new Point(5, 5, '*'), 5, Direction.Right), Direction.Right);
+                snake = new Snake();
                 snake.Draw();
+                tunnel = new Tunnel();
                 Game();
                 Console.ReadLine();
             }
@@ -34,17 +33,16 @@ namespace Snake
             while (!gameOver)
             {
                 while ((DateTime.Now - timeLastMove).Milliseconds < snake.speed){ }
-                if (!pause) Program.snake.Step(null);
+                if (!pause && (DateTime.Now - timeLastMove).Milliseconds >= snake.speed) Program.snake.Step();
             }
         }
         private static void Game()
         {
-            Thread t = new Thread(Step);
-            t.Start();
-            while (!gameOver)
-            {
-                CheckPressKey();
-            }
+            Thread thStep = new Thread(Step);
+            thStep.Start();
+            Thread thTunnel = new Thread(tunnel.Create);
+            thTunnel.Start();
+            while (!gameOver) CheckPressKey();
         }
         private static void CheckPressKey()
         {

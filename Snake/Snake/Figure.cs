@@ -1,31 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Snake
 {
-    class Figure
+    abstract class Figure
     {
-        protected List<Point> pList;
+        protected List<Point> PList;
         protected Figure()
         {
-            pList = new List<Point>();
+            PList = new List<Point>();
+        }
+        public List<Point> GetList()
+        {
+            return PList;
         }
         public virtual void Draw()
         {
-            foreach (Point p in pList)
-            {
+            foreach (Point p in PList)
                 p.Draw();
-            }
         }
-        public void Delete()
+        public virtual void Delete()
         {
-            foreach (Point p in pList)
-            {
+            foreach (Point p in PList)
                 p.Delete();
-            }
         }
-        public List<Point> getList() { return pList; }
+        protected virtual bool Hit(Figure f)
+        {
+            bool result = false;
+            foreach (Point p in PList)
+                    result |= p.Hit(f);
+            return result;
+        }
     }
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Snake
 {
@@ -9,7 +6,7 @@ namespace Snake
     {
         public int width = 42;
         public int height = 22;
-        private char sym = '+';
+        public char sym = '+';
         public String score = "Score: ";
         public override void Draw()
         {
@@ -23,41 +20,42 @@ namespace Snake
             Console.SetCursorPosition(0, height);
             Console.Write(score);
             Line leftLine = new Line(new Point(0, 0, sym), height-1, Direction.Down);
-            pList.AddRange(leftLine.getList());
+            PList.AddRange(leftLine.GetList());
             Line downLine = new Line(new Point(0, height-1, sym), width, Direction.Right);
-            pList.AddRange(downLine.getList());
+            PList.AddRange(downLine.GetList());
             Line rightLine = new Line(new Point(width, height-1, sym), height-1, Direction.Up);
-            pList.AddRange(rightLine.getList());
+            PList.AddRange(rightLine.GetList());
             Line upLine = new Line(new Point(width, 0, sym), width, Direction.Left);
-            pList.AddRange(upLine.getList());
+            PList.AddRange(upLine.GetList());
             base.Draw();
         }
         public void GameOver()
         {
+            Program.gameOver = true;
+
+            char c = '#';
             Console.SetCursorPosition(width / 3, height / 3);
-            for (int i = 0; i < width / 3; ++i) Console.Write("#");
+            for (int i = 0; i < width / 3; ++i) Console.Write(c);
 
             Console.SetCursorPosition(width / 3, height / 3 + 1);
-            Console.Write("#");
+            Console.Write(c);
             for (int i = 0; i < width / 3 - 2; ++i) Console.Write(" ");
-            Console.Write("#");
+            Console.Write(c);
 
             Console.SetCursorPosition(width / 3, height / 3 + 2);
-            Console.Write("#");
+            Console.Write(c);
             for (int i = 0; i < width / 3 / 2 - 5 - 1; ++i) Console.Write(" ");
             Console.Write("GAME OVER!");
             for (int i = 0; i < width / 3 / 2 - 5 - 1; ++i) Console.Write(" ");
-            Console.Write("#");
+            Console.Write(c);
 
             Console.SetCursorPosition(width / 3, height / 3 + 3);
-            Console.Write("#");
+            Console.Write(c);
             for (int i = 0; i < width / 3 - 2; ++i) Console.Write(" ");
-            Console.Write("#");
+            Console.Write(c);
 
             Console.SetCursorPosition(width / 3, height / 3 + 4);
-            for (int i = 0; i < width / 3; ++i) Console.Write("#");
-
-            Program.gameOver = true;
+            for (int i = 0; i < width / 3; ++i) Console.Write(c);
         }
     }
 }

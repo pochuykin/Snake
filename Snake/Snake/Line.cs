@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Snake
 {
@@ -9,12 +6,12 @@ namespace Snake
     {
         public Line(Point p, int size, Direction d)
         {
-            pList = new List<Point>();
+            PList = new List<Point>();
             for(int i = 0; i < size; ++i)
             {
                 Point tmpP = new Point(p);
                 tmpP.Move(i, d);
-                pList.Add(tmpP);
+                PList.Add(tmpP);
             }
         }
     }
