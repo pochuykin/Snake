@@ -11,6 +11,7 @@ namespace Snake
         public static Tunnel tunnel;
         public static bool gameOver = false;
         public static bool pause = false;
+        public static object lockDraw = new object();
         public static DateTime timeLastMove = new DateTime();
         static void Main(string[] args)
         {

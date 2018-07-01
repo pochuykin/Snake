@@ -5,7 +5,6 @@ namespace Snake
 {
     class Point
     {
-        private static object lockDraw = new object();
         private int X { get; set; }
         private int Y { get; set; }
         private char Sym { get; set; }
@@ -40,7 +39,7 @@ namespace Snake
         }
         public void Draw()
         {
-            lock (lockDraw)
+            lock (Program.lockDraw)
             {
                 ConsoleColor tmpColor = Console.ForegroundColor;
                 Console.ForegroundColor = Color;
@@ -51,7 +50,7 @@ namespace Snake
         }
         public void Draw(char s, ConsoleColor color = ConsoleColor.White)
         {
-            lock (lockDraw)
+            lock (Program.lockDraw)
             {
                 ConsoleColor tmpColor = Console.ForegroundColor;
                 Console.ForegroundColor = color;
@@ -62,7 +61,7 @@ namespace Snake
         }
         public void Draw(char s)
         {
-            lock (lockDraw)
+            lock (Program.lockDraw)
             {
                 ConsoleColor tmpColor = Console.ForegroundColor;
                 Console.ForegroundColor = Color;
@@ -73,7 +72,7 @@ namespace Snake
         }
         public void Delete()
         {
-            lock (lockDraw)
+            lock (Program.lockDraw)
             {
                 Console.SetCursorPosition(X, Y);
                 Console.Write(' ');

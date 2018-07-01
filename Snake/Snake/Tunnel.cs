@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Collections.Generic;
 
 namespace Snake
 {
@@ -7,6 +6,7 @@ namespace Snake
     {
         private int nextTunel;
         private const int speed = 1;
+        public List<Direction> directions = new List<Direction>();
         public void Create()
         {
             Sym = '0';
@@ -18,23 +18,45 @@ namespace Snake
                 {
                     if (PList.Count == 0)
                     {
-                        Random r = new Random();
-                        Point partTunnel1, partTunnel2;
-                        switch (r.Next(0, 32) % 2)
+                        int tmpR1, tmpR2, tmpR3, tmpR4;
+                        double cornerK = 0.7;
+                        System.Random r = new System.Random();
+                        tmpR1 = r.Next(1, Program.playground.width - 2);
+                        //исключение случаев, когда тунели близко друг к другу в одном углу
+                        if (tmpR1 > Program.playground.width * cornerK)
                         {
-                            case (0):
-                                partTunnel1 = new Point(r.Next(1, Program.playground.width - 2), 0, Sym, Color);
-                                partTunnel2 = new Point(r.Next(1, Program.playground.width - 2), Program.playground.height - 1, Sym, Color);
-                                PList.Add(partTunnel1);
-                                PList.Add(partTunnel2);
-                                break;
-                            case (1):
-                                partTunnel1 = new Point(0, r.Next(1, Program.playground.height - 2), Sym, Color);
-                                partTunnel2 = new Point(Program.playground.width, r.Next(1, Program.playground.height - 2), Sym, Color);
-                                PList.Add(partTunnel1);
-                                PList.Add(partTunnel2);
-                                break;
+                            tmpR2 = r.Next(1 + (int)(Program.playground.height * (1 - cornerK)), Program.playground.height - 2);
+                            tmpR4 = r.Next(1, Program.playground.height - 2);
                         }
+                        else if (tmpR1 < Program.playground.width * (1 - cornerK))
+                        {
+                            tmpR2 = r.Next(1, Program.playground.height - 2);
+                            tmpR4 = r.Next(1 + (int)(Program.playground.height * (1 - cornerK)), Program.playground.height - 2);
+                        }
+                        else
+                        {
+                            tmpR2 = r.Next(1, Program.playground.height - 2);
+                            tmpR4 = r.Next(1, Program.playground.height - 2);
+                        }
+                        if (tmpR2 > Program.playground.height * cornerK && tmpR4 > Program.playground.height * cornerK)
+                            tmpR3 = r.Next(1 + (int)(Program.playground.width * (1 - cornerK)), Program.playground.width - (int)(Program.playground.width * (1 - cornerK)) - 2);
+                        else if (tmpR2 > Program.playground.height * cornerK)
+                            tmpR3 = r.Next(1, Program.playground.width - (int)(Program.playground.width * (1 - cornerK)) - 2);
+                        else if (tmpR4 > Program.playground.height * cornerK)
+                            tmpR3 = r.Next(1 + (int)(Program.playground.width * (1 - cornerK)), Program.playground.width - 2);
+                        else
+                            tmpR3 = r.Next(1, Program.playground.width - 2);
+                        
+                        PList.Add(new Point(tmpR1, 0, Sym, Color)); directions.Add(Direction.Down);
+                        PList.Add(new Point(tmpR3, Program.playground.height - 1, Sym, Color)); directions.Add(Direction.Up);
+                        PList.Add(new Point(0, tmpR4, Sym, Color)); directions.Add(Direction.Right);
+                        PList.Add(new Point(Program.playground.width, tmpR2, Sym, Color)); directions.Add(Direction.Left);
+                        tmpR1 = r.Next(4^4) % 4;
+                        PList.RemoveAt(tmpR1);
+                        directions.RemoveAt(tmpR1);
+                        tmpR2 = r.Next(3^3) % 3;
+                        PList.RemoveAt(tmpR2);
+                        directions.RemoveAt(tmpR2);
                         Draw();
                     }
                 }
@@ -47,6 +69,7 @@ namespace Snake
                     if (pTunnel == pPlayground)
                         pPlayground.Draw();
             PList.Clear();
+            directions.Clear();
             nextTunel = Program.snake.GetList().Count + speed;
         }
 

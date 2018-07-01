@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace Snake
@@ -15,7 +14,7 @@ namespace Snake
         public Snake()
         {
             Sym = 'O';
-            Color = ConsoleColor.Gray;
+            Color = System.ConsoleColor.Gray;
             PList.AddRange(new Line(new Point(5, 5, Sym, Color), beginLength, direction, Sym).GetList());
             PrintPoints();
         }
@@ -31,24 +30,30 @@ namespace Snake
                 head.Move(1, direction); 
             else
             {
-                Point tunnelPart1 = Program.tunnel.GetList().First();
-                Point tunnelPart2 = Program.tunnel.GetList().Last();
+                Point tunnelPart1 = Program.tunnel.GetList()[0];
+                Point tunnelPart2 = Program.tunnel.GetList()[1];
                 if (head.Hit(tunnelPart1))
+                {
                     head = new Point(tunnelPart2, Sym, Color);
+                    direction = Program.tunnel.directions[1];
+                }
                 else if (head.Hit(tunnelPart2))
+                {
                     head = new Point(tunnelPart1, Sym, Color);
+                    direction = Program.tunnel.directions[0];
+                }
                 ++isTunnel;
             }
             return head;
         }
-        public void HandleKey(ConsoleKeyInfo key)
+        public void HandleKey(System.ConsoleKeyInfo key)
         {
             switch (key.Key)
             {
-                case ConsoleKey.RightArrow: if (direction != Direction.Left && direction != Direction.Right) { SetDirection(Direction.Right); } break;
-                case ConsoleKey.LeftArrow: if (direction != Direction.Left && direction != Direction.Right) { SetDirection(Direction.Left); } break;
-                case ConsoleKey.UpArrow: if (direction != Direction.Down && direction != Direction.Up) { SetDirection(Direction.Up); } break;
-                case ConsoleKey.DownArrow: if (direction != Direction.Down && direction != Direction.Up) { SetDirection(Direction.Down); } break;
+                case System.ConsoleKey.RightArrow: if (direction != Direction.Left && direction != Direction.Right) { SetDirection(Direction.Right); } break;
+                case System.ConsoleKey.LeftArrow: if (direction != Direction.Left && direction != Direction.Right) { SetDirection(Direction.Left); } break;
+                case System.ConsoleKey.UpArrow: if (direction != Direction.Down && direction != Direction.Up) { SetDirection(Direction.Up); } break;
+                case System.ConsoleKey.DownArrow: if (direction != Direction.Down && direction != Direction.Up) { SetDirection(Direction.Down); } break;
             }
         }
         public void Move()
@@ -83,7 +88,7 @@ namespace Snake
         private void CheckTunnel()
         {
             Point head = Program.snake.GetList().Last();
-            if (Program.tunnel.GetList().Any())
+            if (Program.tunnel.GetList().Count!=0)
             {
                 Point tun1 = Program.tunnel.GetList().First();
                 Point tun2 = Program.tunnel.GetList().Last();
@@ -108,7 +113,7 @@ namespace Snake
         private void Clash()
         {
             char sym = '@';
-            Point p = new Point(PList.Last(), sym, ConsoleColor.Red);
+            Point p = new Point(PList.Last(), sym, System.ConsoleColor.Red);
             p.Draw();
         }
         protected override bool Hit(Figure f)
@@ -117,7 +122,7 @@ namespace Snake
             List<Point> list = f.GetList().ToList();
             if (f is Snake)
                 list.Remove(list.Last());
-            if (f is PlayGround && Program.tunnel.GetList().Any())
+            if (f is PlayGround && Program.tunnel.GetList().Count!=0)
             {
                 List<Point> l = new List<Point>();
                 foreach (Point pTunel in Program.tunnel.GetList())
@@ -145,8 +150,8 @@ namespace Snake
         }
         public void PrintPoints()
         {
-            Console.SetCursorPosition(Program.playground.score.Length, Program.playground.height);
-            Console.Write((PList.Count() - 5) * 10);
+            System.Console.SetCursorPosition(Program.playground.score.Length, Program.playground.height);
+            System.Console.Write((PList.Count() - beginLength) * 10);
         }
     }
 }
