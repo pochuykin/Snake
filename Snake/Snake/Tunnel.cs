@@ -51,10 +51,10 @@ namespace Snake
                         PList.Add(new Point(tmpR3, Program.playground.height - 1, Sym, Color)); directions.Add(Direction.Up);
                         PList.Add(new Point(0, tmpR4, Sym, Color)); directions.Add(Direction.Right);
                         PList.Add(new Point(Program.playground.width, tmpR2, Sym, Color)); directions.Add(Direction.Left);
-                        tmpR1 = r.Next(4^4) % 4;
+                        tmpR1 = r.Next(4) % 4;
                         PList.RemoveAt(tmpR1);
                         directions.RemoveAt(tmpR1);
-                        tmpR2 = r.Next(3^3) % 3;
+                        tmpR2 = r.Next(3) % 3;
                         PList.RemoveAt(tmpR2);
                         directions.RemoveAt(tmpR2);
                         Draw();

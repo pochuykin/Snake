@@ -7,7 +7,7 @@ namespace Snake
     {
         private Direction direction = Direction.Right;
         private const int beginLength = 5;
-        private const int speedBegin = 200;
+        private const int speedBegin = 500;
         private const int speedEnd = 10;
         public float speed = speedBegin;
         public int isTunnel = 0;
@@ -37,11 +37,12 @@ namespace Snake
                     head = new Point(tunnelPart2, Sym, Color);
                     direction = Program.tunnel.directions[1];
                 }
-                else if (head.Hit(tunnelPart2))
+                else //if (head.Hit(tunnelPart2))
                 {
                     head = new Point(tunnelPart1, Sym, Color);
                     direction = Program.tunnel.directions[0];
                 }
+                head.Move(1, direction);
                 ++isTunnel;
             }
             return head;
@@ -50,10 +51,10 @@ namespace Snake
         {
             switch (key.Key)
             {
-                case System.ConsoleKey.RightArrow: if (direction != Direction.Left && direction != Direction.Right) { SetDirection(Direction.Right); } break;
-                case System.ConsoleKey.LeftArrow: if (direction != Direction.Left && direction != Direction.Right) { SetDirection(Direction.Left); } break;
-                case System.ConsoleKey.UpArrow: if (direction != Direction.Down && direction != Direction.Up) { SetDirection(Direction.Up); } break;
-                case System.ConsoleKey.DownArrow: if (direction != Direction.Down && direction != Direction.Up) { SetDirection(Direction.Down); } break;
+                case System.ConsoleKey.RightArrow: if (direction != Direction.Left) { SetDirection(Direction.Right); } break;
+                case System.ConsoleKey.LeftArrow: if (direction != Direction.Right) { SetDirection(Direction.Left); } break;
+                case System.ConsoleKey.UpArrow: if (direction != Direction.Down) { SetDirection(Direction.Up); } break;
+                case System.ConsoleKey.DownArrow: if (direction != Direction.Up) { SetDirection(Direction.Down); } break;
             }
         }
         public void Move()
