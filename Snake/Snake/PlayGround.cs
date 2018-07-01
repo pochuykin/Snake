@@ -6,8 +6,12 @@ namespace Snake
     {
         public int width = 42;
         public int height = 22;
-        public char sym = '+';
-        public String score = "Score: ";
+        public string score = "Score: ";
+        public PlayGround()
+        {
+            Sym = '+';
+            Color = ConsoleColor.White;
+        }
         public override void Draw()
         {
             Console.SetWindowPosition(0, 0);
@@ -19,13 +23,13 @@ namespace Snake
             Console.Title = "Snake";
             Console.SetCursorPosition(0, height);
             Console.Write(score);
-            Line leftLine = new Line(new Point(0, 0, sym), height-1, Direction.Down);
+            Line leftLine = new Line(new Point(0, 0, Sym, Color), height-1, Direction.Down, Sym);
             PList.AddRange(leftLine.GetList());
-            Line downLine = new Line(new Point(0, height-1, sym), width, Direction.Right);
+            Line downLine = new Line(new Point(0, height-1, Sym, Color), width, Direction.Right, Sym);
             PList.AddRange(downLine.GetList());
-            Line rightLine = new Line(new Point(width, height-1, sym), height-1, Direction.Up);
+            Line rightLine = new Line(new Point(width, height-1, Sym, Color), height-1, Direction.Up, Sym);
             PList.AddRange(rightLine.GetList());
-            Line upLine = new Line(new Point(width, 0, sym), width, Direction.Left);
+            Line upLine = new Line(new Point(width, 0, Sym, Color), width, Direction.Left, Sym);
             PList.AddRange(upLine.GetList());
             base.Draw();
         }

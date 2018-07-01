@@ -8,27 +8,28 @@ namespace Snake
         private int X { get; set; }
         private int Y { get; set; }
         private char Sym { get; set; }
-
-        public Point(Point p)
-        {
-            X = p.X;
-            Y = p.Y;
-            Sym = p.Sym;
-        }
+        private ConsoleColor Color { get; set; }
         public Point(Point p, char s)
         {
             X = p.X;
             Y = p.Y;
             Sym = s;
+            Color = p.Color;
         }
-        public Point(int x, int y, char s)
+        public Point(Point p, char s, ConsoleColor color)
+        {
+            X = p.X;
+            Y = p.Y;
+            Sym = s;
+            Color = color;
+        }
+        public Point(int x, int y, char s, ConsoleColor color)
         {
             X = x;
             Y = y;
             Sym = s;
+            Color = color;
         }
-
-        public int GetY() { return Y; }
         public void Move(int dx, Direction d)
         {
             if (d == Direction.Left) { this.X -= dx; }
@@ -38,20 +39,26 @@ namespace Snake
         }
         public void Draw()
         {
+            ConsoleColor tmpColor = Console.ForegroundColor;
+            Console.ForegroundColor = Color;
             Console.SetCursorPosition(X, Y);
             Console.Write(Sym);
+            Console.ForegroundColor = tmpColor;
         }
-        public void Draw(char s)
-        {
-            Console.SetCursorPosition(X, Y);
-            Console.Write(s);
-        }
-        public void Draw(System.ConsoleColor color)
+        public void Draw(char s, ConsoleColor color = ConsoleColor.White)
         {
             ConsoleColor tmpColor = Console.ForegroundColor;
             Console.ForegroundColor = color;
             Console.SetCursorPosition(X, Y);
-            Console.Write(Sym);
+            Console.Write(s);
+            Console.ForegroundColor = tmpColor;
+        }
+        public void Draw(char s)
+        {
+            ConsoleColor tmpColor = Console.ForegroundColor;
+            Console.ForegroundColor = Color;
+            Console.SetCursorPosition(X, Y);
+            Console.Write(s);
             Console.ForegroundColor = tmpColor;
         }
         public void Delete()

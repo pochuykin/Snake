@@ -33,7 +33,8 @@ namespace Snake
             while (!gameOver)
             {
                 while ((DateTime.Now - timeLastMove).Milliseconds < snake.speed){ }
-                if (!pause && (DateTime.Now - timeLastMove).Milliseconds >= snake.speed) Program.snake.Step();
+                if (!pause && (DateTime.Now - timeLastMove).Milliseconds >= snake.speed)
+                    Program.snake.Step();
             }
         }
         private static void Game()

@@ -4,8 +4,9 @@ namespace Snake
 {
     abstract class Figure
     {
-        protected System.ConsoleColor color;
         protected List<Point> PList;
+        protected char Sym;
+        public System.ConsoleColor Color;
         protected Figure()
         {
             PList = new List<Point>();
@@ -13,11 +14,6 @@ namespace Snake
         public List<Point> GetList()
         {
             return PList;
-        }
-        public virtual void Draw(System.ConsoleColor c)
-        {
-            foreach (Point p in PList)
-                p.Draw(c);
         }
         public virtual void Draw()
         {

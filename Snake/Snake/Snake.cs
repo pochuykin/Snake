@@ -7,14 +7,16 @@ namespace Snake
     class Snake: Figure
     {
         private Direction direction = Direction.Right;
+        private const int beginLength = 5;
         private const int speedBegin = 200;
         private const int speedEnd = 10;
         public float speed = speedBegin;
         public int isTunnel = 0;
-        public char sym = 'O';
         public Snake()
         {
-            PList.AddRange(new Line(new Point(5, 5, sym), 5, direction).GetList());
+            Sym = 'O';
+            Color = ConsoleColor.Gray;
+            PList.AddRange(new Line(new Point(5, 5, Sym, Color), beginLength, direction, Sym).GetList());
             PrintPoints();
         }
         private void SetDirection(Direction d)
@@ -24,14 +26,17 @@ namespace Snake
         }
         private Point GetNextPoint()
         {
-            Point head = new Point(PList.Last());
-            if (isTunnel!=1) head.Move(1, direction); 
+            Point head = new Point(PList.Last(), Sym);
+            if (isTunnel!=1)
+                head.Move(1, direction); 
             else
             {
                 Point tunnelPart1 = Program.tunnel.GetList().First();
                 Point tunnelPart2 = Program.tunnel.GetList().Last();
-                if (head.Hit(tunnelPart1)) head = new Point(tunnelPart2, sym);
-                else if (head.Hit(tunnelPart2)) head = new Point(tunnelPart1, sym);
+                if (head.Hit(tunnelPart1))
+                    head = new Point(tunnelPart2, Sym, Color);
+                else if (head.Hit(tunnelPart2))
+                    head = new Point(tunnelPart1, Sym, Color);
                 ++isTunnel;
             }
             return head;
@@ -59,11 +64,13 @@ namespace Snake
                     tail.Delete();
                 }
                 else Eat();
-                if(!Hit(Program.tunnel)) head.Draw();
+                if(!Hit(Program.tunnel))
+                    head.Draw();
             }
             else
             {
-                if (!Hit(Program.tunnel)) head.Draw();
+                if (!Hit(Program.tunnel))
+                    head.Draw();
                 if (!Hit(Program.food))
                 {
                     tail.Delete();
@@ -73,7 +80,6 @@ namespace Snake
             }
             Program.timeLastMove = System.DateTime.Now;
         }
-
         private void CheckTunnel()
         {
             Point head = Program.snake.GetList().Last();
@@ -97,32 +103,34 @@ namespace Snake
             Program.snake.Move();
             CheckTunnel();
             if (Program.snake.Hit(Program.playground) || Program.snake.Hit(Program.snake))
-            {
                 Program.playground.GameOver();
-            }
         }
         private void Clash()
         {
             char sym = '@';
-            Point p = new Point(PList.Last(), sym);
-            p.Draw(ConsoleColor.Red);
+            Point p = new Point(PList.Last(), sym, ConsoleColor.Red);
+            p.Draw();
         }
         protected override bool Hit(Figure f)
         {
             bool result = false;
             List<Point> list = f.GetList().ToList();
-            if (f is Snake) list.Remove(list.Last());
+            if (f is Snake)
+                list.Remove(list.Last());
             if (f is PlayGround && Program.tunnel.GetList().Any())
             {
                 List<Point> l = new List<Point>();
                 foreach (Point pTunel in Program.tunnel.GetList())
                     foreach (Point p in list)
-                        if (p == pTunel) l.Add(p);
+                        if (p == pTunel)
+                            l.Add(p);
                 foreach (Point p in l)
                     list.Remove(p);
             }
-            foreach (Point p in list) result |= Hit(p);
-            if (result && !(f is Food) && !(f is Tunnel)) Clash();
+            foreach (Point p in list)
+                result |= Hit(p);
+            if (result && !(f is Food) && !(f is Tunnel))
+                Clash();
             return result;
         }
         public bool Hit(Point p)
