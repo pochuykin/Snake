@@ -5,6 +5,7 @@ namespace Snake
 {
     class Point
     {
+        private static object lockDraw = new object();
         private int X { get; set; }
         private int Y { get; set; }
         private char Sym { get; set; }
@@ -39,32 +40,44 @@ namespace Snake
         }
         public void Draw()
         {
-            ConsoleColor tmpColor = Console.ForegroundColor;
-            Console.ForegroundColor = Color;
-            Console.SetCursorPosition(X, Y);
-            Console.Write(Sym);
-            Console.ForegroundColor = tmpColor;
+            lock (lockDraw)
+            {
+                ConsoleColor tmpColor = Console.ForegroundColor;
+                Console.ForegroundColor = Color;
+                Console.SetCursorPosition(X, Y);
+                Console.Write(Sym);
+                Console.ForegroundColor = tmpColor;
+            }
         }
         public void Draw(char s, ConsoleColor color = ConsoleColor.White)
         {
-            ConsoleColor tmpColor = Console.ForegroundColor;
-            Console.ForegroundColor = color;
-            Console.SetCursorPosition(X, Y);
-            Console.Write(s);
-            Console.ForegroundColor = tmpColor;
+            lock (lockDraw)
+            {
+                ConsoleColor tmpColor = Console.ForegroundColor;
+                Console.ForegroundColor = color;
+                Console.SetCursorPosition(X, Y);
+                Console.Write(s);
+                Console.ForegroundColor = tmpColor;
+            }
         }
         public void Draw(char s)
         {
-            ConsoleColor tmpColor = Console.ForegroundColor;
-            Console.ForegroundColor = Color;
-            Console.SetCursorPosition(X, Y);
-            Console.Write(s);
-            Console.ForegroundColor = tmpColor;
+            lock (lockDraw)
+            {
+                ConsoleColor tmpColor = Console.ForegroundColor;
+                Console.ForegroundColor = Color;
+                Console.SetCursorPosition(X, Y);
+                Console.Write(s);
+                Console.ForegroundColor = tmpColor;
+            }
         }
         public void Delete()
         {
-            Console.SetCursorPosition(X, Y);
-            Console.Write(' ');
+            lock (lockDraw)
+            {
+                Console.SetCursorPosition(X, Y);
+                Console.Write(' ');
+            }
         }
         public bool Hit(Point p)
         {
