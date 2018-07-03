@@ -22,8 +22,11 @@ namespace Snake
             Console.ForegroundColor = ConsoleColor.Gray;
             Console.CursorVisible = false;
             Console.Title = "Snake";
-            Console.SetCursorPosition(0, height);
-            Console.Write(score);
+            lock (Program.lockDraw)
+            {
+                Console.SetCursorPosition(0, height);
+                Console.Write(score);
+            }
             Line leftLine = new Line(new Point(0, 0, Sym, Color), height - 1, Direction.Down, Sym);
             PList.AddRange(leftLine.GetList());
             Line downLine = new Line(new Point(0, height - 1, Sym, Color), width, Direction.Right, Sym);
@@ -41,28 +44,28 @@ namespace Snake
             lock (Program.lockDraw)
             {
                 char c = '#';
-                Console.SetCursorPosition(width / 3, height / 3);
-                for (int i = 0; i < width / 3; ++i) Console.Write(c);
+                Console.SetCursorPosition(width / 3 + 1, height / 3);
+                for (int i = 0; i <= width / 3; ++i) Console.Write(c);
 
-                Console.SetCursorPosition(width / 3, height / 3 + 1);
+                Console.SetCursorPosition(width / 3 + 1, height / 3 + 1);
                 Console.Write(c);
-                for (int i = 0; i < width / 3 - 2; ++i) Console.Write(" ");
-                Console.Write(c);
-
-                Console.SetCursorPosition(width / 3, height / 3 + 2);
-                Console.Write(c);
-                for (int i = 0; i < width / 3 / 2 - 5 - 1; ++i) Console.Write(" ");
-                Console.Write("GAME OVER!");
-                for (int i = 0; i < width / 3 / 2 - 5 - 1; ++i) Console.Write(" ");
+                for (int i = 0; i <= width / 3 - 2; ++i) Console.Write(" ");
                 Console.Write(c);
 
-                Console.SetCursorPosition(width / 3, height / 3 + 3);
+                Console.SetCursorPosition(width / 3 + 1, height / 3 + 2);
                 Console.Write(c);
-                for (int i = 0; i < width / 3 - 2; ++i) Console.Write(" ");
+                for (int i = 0; i <= width / 3 / 2 - 5 - 1; ++i) Console.Write(" ");
+                Console.Write("GAME OVER");
+                for (int i = 0; i <= width / 3 / 2 - 5 - 1; ++i) Console.Write(" ");
                 Console.Write(c);
 
-                Console.SetCursorPosition(width / 3, height / 3 + 4);
-                for (int i = 0; i < width / 3; ++i) Console.Write(c);
+                Console.SetCursorPosition(width / 3 + 1, height / 3 + 3);
+                Console.Write(c);
+                for (int i = 0; i <= width / 3 - 2; ++i) Console.Write(" ");
+                Console.Write(c);
+
+                Console.SetCursorPosition(width / 3 + 1, height / 3 + 4);
+                for (int i = 0; i <= width / 3; ++i) Console.Write(c);
             }
         }
     }

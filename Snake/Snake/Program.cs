@@ -34,7 +34,7 @@ namespace Snake
             while (!gameOver)
             {
                 while ((DateTime.Now - timeLastMove).Milliseconds < snake.speed){ }
-                if (!pause && (DateTime.Now - timeLastMove).Milliseconds >= snake.speed)
+                if (!pause && (DateTime.Now - timeLastMove).Milliseconds >= snake.speed && !gameOver)
                     Program.snake.Step();
             }
         }
