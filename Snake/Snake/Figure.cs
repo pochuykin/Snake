@@ -4,32 +4,32 @@ namespace Snake
 {
     abstract class Figure
     {
-        protected List<Point> PList;
-        protected char Sym;
-        public System.ConsoleColor Color;
+        protected List<Point> pList;
+        protected char sym;
+        public System.ConsoleColor color;
         protected Figure()
         {
-            PList = new List<Point>();
+            pList = new List<Point>();
         }
-        public List<Point> GetList()
+        public List<Point> getList()
         {
-            return PList;
+            return pList;
         }
-        public virtual void Draw()
+        public virtual void draw()
         {
-            foreach (Point p in PList)
-                p.Draw();
+            foreach (Point p in pList)
+                p.draw();
         }
-        public virtual void Delete()
+        public virtual void delete()
         {
-            foreach (Point p in PList)
-                p.Delete();
+            foreach (Point p in pList)
+                p.delete();
         }
-        protected virtual bool Hit(Figure f)
+        protected virtual bool hit(Figure f)
         {
             bool result = false;
-            foreach (Point p in PList)
-                    result |= p.Hit(f);
+            foreach (Point p in pList)
+                    result |= p.hit(f);
             return result;
         }
     }

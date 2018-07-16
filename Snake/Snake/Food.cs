@@ -7,27 +7,29 @@ namespace Snake
     {
         public Food()
         {
-            Sym = '$';
-            Color = ConsoleColor.Blue;
+            sym = '$';
+            color = ConsoleColor.Green;
         }
-        public override void Draw()
+        public override void draw()
         {
-            if (!PList.Any())
+            //если еды еще нет
+            if (!pList.Any())
             {
                 Random r = new Random();
-                Point p = new Point(Program.playground.width/2, Program.playground.height /2, Sym, Color);
-                while (Program.snake != null && p.Hit(Program.snake)) 
+                Point p = new Point(r.Next(1, Program.playground.getWidth() - 1), r.Next(1, Program.playground.getHeight() - 1), sym, color);
+                //если появившаяся еда попала на змейку
+                while (p.hit(Program.snake)) 
                 {
-                    p = new Point(r.Next(1, Program.playground.width - 1), r.Next(1, Program.playground.height - 1), Sym, Color);
+                    p = new Point(r.Next(1, Program.playground.getWidth() - 1), r.Next(1, Program.playground.getHeight() - 1), sym, color);
                 }
-                PList.Add(p);
-                base.Draw();
+                pList.Add(p);
+                base.draw();
             }
         }
         public void Eat()
         {
-            PList.Clear();
-            Draw();
+            pList.Clear();
+            draw();
         }
     }
 }
